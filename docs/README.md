@@ -20,7 +20,7 @@ capabilities.
 
 ## Supporting material
 
-- [0.3.0 release notes](RELEASE_NOTES_0.3.0.md) — release candidate
+- [0.3.0 release notes](RELEASE_NOTES_0.3.0.md) — npm published; final release steps pending
 - [Migration and change summary](MIGRATION.md)
 
 Frozen source, declarations, and accepted tests are authoritative for the

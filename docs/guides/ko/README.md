@@ -18,5 +18,5 @@
 호스트는 DOM, CSS, 측정 조정, 스크롤, 텍스트/접근성 정책을 소유합니다.
 
 자세한 [변경 요약](../../MIGRATION.md)과 [0.3.0 출시 노트](../../RELEASE_NOTES_0.3.0.md)도
-참조할 수 있습니다. 현재 문서는 release candidate 상태를 정확히 표시하며
-아직 npm에 게시된 release라고 주장하지 않습니다.
+참조할 수 있습니다. npm package는 게시 및 registry 검증이 완료되었으며,
+최종 tag와 GitHub Release, production website 배포는 별도의 pending 단계입니다.
