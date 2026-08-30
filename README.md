@@ -122,6 +122,6 @@ release decisions.
 ## Current status
 
 The accepted feature implementation is frozen. The coordinated `0.3.0` npm
-packages are published and registry-verified, and the official site is deployed
-with production browser smoke acceptance complete. The Git tag and GitHub
-Release remain separate final release steps.
+packages are published and registry-verified, the official site is deployed
+with production browser smoke acceptance complete, and the `v0.3.0` GitHub
+Release is available.

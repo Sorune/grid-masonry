@@ -20,5 +20,5 @@ Core는 결정적 배치 계산과 논리적 배치를 담당하고, host는 DOM
 
 자세한 [변경 요약](../../MIGRATION.md)과 [0.3.0 출시 노트](../../RELEASE_NOTES_0.3.0.md)도
 참조할 수 있습니다. `0.3.0` npm package는 게시 및 registry 검증이
-완료되었습니다. 공식 사이트 배포와 production browser smoke도 완료되었습니다.
-Git tag와 GitHub Release의 현재 상태는 각 release 문서에서 확인할 수 있습니다.
+완료되었습니다. 공식 사이트 배포와 production browser smoke도 완료되었고
+`v0.3.0` Git tag와 GitHub Release도 공개되었습니다.

@@ -13,8 +13,8 @@
 
 현재 feature 구현은 확정되어 있습니다. `0.3.0` package는 MIT 라이선스와
 정확한 Core dependency로 게시되었고 registry 검증도 완료되었습니다. 공식
-사이트 배포와 production browser smoke도 완료되었습니다. Git tag와 GitHub
-Release는 마지막 release 절차로 남아 있습니다.
+사이트 배포와 production browser smoke도 완료되었으며 `v0.3.0` Git tag와
+GitHub Release도 공개되었습니다.
 
 MIT © 2026 Sorune.
 

@@ -4,8 +4,8 @@
 
 The feature implementation is frozen. The coordinated npm packages are
 published and accepted by fresh registry-only consumers. The official site is
-deployed and production browser smoke acceptance is complete. The Git tag and
-GitHub Release remain as the final release steps.
+deployed and production browser smoke acceptance is complete. The `v0.3.0`
+Git tag and GitHub Release are available.
 
 Highlights:
 
@@ -27,8 +27,8 @@ Npm Core: published
 Npm React: published
 Npm Browser: published
 Registry-only consumer acceptance: PASS
-Git tag: pending
-GitHub Release: pending
+Git tag: `v0.3.0` — created
+GitHub Release: created
 Production Cloudflare Pages deployment: PASS
 Production browser smoke: PASS
 License: MIT © 2026 Sorune.

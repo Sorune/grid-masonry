@@ -7,8 +7,7 @@ The accepted 0.3.0 feature implementation is frozen. See
 release-notes details.
 
 The coordinated Core, React, and Browser npm packages are published and
-registry-verified. The official site is deployed and production browser smoke
-acceptance is complete. The Git tag and GitHub Release remain pending as the
-final release steps.
+registry-verified. The official site is deployed, production browser smoke
+acceptance is complete, and tag `v0.3.0` with the GitHub Release is available.
 
 License: MIT © 2026 Sorune.
