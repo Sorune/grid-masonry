@@ -19,11 +19,12 @@
 
 ## Release status
 
-The accepted feature implementation is frozen. Package manifests are
-coordinated at `0.3.0` with MIT metadata and exact Core dependencies, but npm
-publication and registry-backed clean-consumer verification are not complete.
+The accepted feature implementation is frozen. The coordinated `0.3.0` Core,
+React, and Browser packages are published with MIT metadata and exact Core
+dependencies, and registry-backed clean-consumer verification is complete.
 
-The repository is not yet a published release. MIT © 2026 Sorune.
+The official site, `v0.3.0` tag, and GitHub Release are public. MIT © 2026
+Sorune.
 
 ## Acknowledgements and development disclosure
 

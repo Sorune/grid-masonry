@@ -1,30 +1,47 @@
 # 제한사항과 현재 상태
 
-- Core는 DOM, CSS, scroll, text/locale 방향, 접근성, animation, image loading,
-  product semantics를 소유하지 않습니다.
-- `crossDirection`은 교차 축의 위치를 투영하는 옵션이며 자동 RTL이 아닙니다.
-- input, cells, DOM 순서를 재배열하지 않습니다. dense/backfill과
-  `placementMode` API는 제공하지 않습니다.
-- preferred lane은 soft intent이고 locked lane은 논리적 레인 제약입니다.
-- 일부 state/configuration은 안전하게 전체 재계산으로 전환될 수 있습니다.
-- reserved region이 많아지면 장애물 처리 비용이 증가합니다.
-- 진단은 opt-in 파생 관찰이며 state에 log를 저장하지 않습니다.
-- React Native 지원은 deferred 상태입니다.
+## 의도적으로 맡지 않는 영역
 
-현재 feature 구현은 확정되어 있습니다. `0.3.0` package는 MIT 라이선스와
-정확한 Core dependency로 게시되었고 registry 검증도 완료되었습니다. 공식
-사이트 배포와 production browser smoke도 완료되었으며 `v0.3.0` Git tag와
-GitHub Release도 공개되었습니다.
+Core는 배치 좌표 계산만 담당합니다. DOM과 CSS 렌더링, 스크롤, 텍스트 및
+로케일 방향, 접근성 정책, 애니메이션, 이미지 로딩, 제품별 상태와 정책은
+호스트 애플리케이션의 책임입니다.
+
+- `crossDirection`은 교차 축 좌표를 반전하는 옵션입니다. RTL이나 DOM·텍스트
+  방향, 키보드 이동 순서, 화면 낭독기의 읽기 순서를 자동으로 정하지
+  않습니다.
+- 입력 순서와 DOM 순서는 바꾸지 않습니다. dense/backfill은 현재 지원 대상이
+  아니며 `dense`, `backfill`, `placementMode` API도 없습니다.
+- `preferredColumn`과 `preferredRow`는 가능한 경우 우선할 레인을
+  지정합니다. `lockedColumn`과 `lockedRow`는 논리 레인을 제약하지만
+  절대 픽셀 좌표를 고정하지는 않습니다.
+- 일부 상태 변경과 복잡한 설정은 전체 재계산을 사용합니다. 모든 작업이
+  증분 계산이나 O(1) 시간에 처리된다고 보장하지 않습니다.
+- 예약 영역이 많아질수록 장애물 검사 비용이 늘어납니다. 성능 측정 결과는
+  구현 상태를 점검하기 위한 참고값이며 성능 보장 수치가 아닙니다.
+- 진단은 요청할 때만 계산되는 관찰 정보입니다. Core는 진단 내역을 상태나
+  로그로 보관하지 않습니다.
+- React Native 지원은 현재 보류되어 있습니다.
+
+## 출시 상태
+
+Core, React, Browser 패키지 0.3.0은 MIT 라이선스로 npm에 공개되었습니다.
+React와 Browser 패키지는 같은 버전의 Core를 정확히 의존하며, npm
+레지스트리에서 새 프로젝트에 설치해 사용하는 검증도 마쳤습니다.
+
+공식 사이트와 `v0.3.0` 태그, GitHub 릴리스도 모두 공개되어 있습니다.
 
 MIT © 2026 Sorune.
 
-## 감사의 말과 개발 공개
+## 감사의 말과 개발 과정 공개
 
-표준 masonry, TypeScript, npm, React, browser platform 패턴은 API와 architecture
-경계를 평가하기 위한 비교 자료로 검토했습니다. 별도로 명시하지 않는 한 이는
-소스 복사, 제3자 asset 사용, endorsement 또는 근거 없는 lineage를 뜻하지
-않습니다. 실제 dependency에는 각 라이선스와 고지 의무가 적용됩니다.
+다른 프로젝트는 범용 API와 구조를 검토하기 위한 비교 자료로
+살펴보았습니다. 별도로 밝히지 않는 한, grid-masonry가 해당 소스 코드나
+제3자 자료를 복사했다는 뜻은 아닙니다. 해당 프로젝트가 grid-masonry를
+보증한다거나 grid-masonry가 그 프로젝트의 계보를 잇는다고 주장하는 것도
+아닙니다. 실제로 사용하는 의존성에는 각각의 라이선스가 적용됩니다.
 
-AI-assisted engineering tools는 구현, 테스트, 문서 작성, 분석, 검토 및
-orchestration을 지원했습니다. architecture, public contract, acceptance,
-maintenance, release 결정의 책임은 사람인 project ownership에 있습니다.
+구현, 테스트, 문서 작성, 분석과 검토 과정에서 AI 기반 개발 도구를
+활용했습니다. 공개 API, 구조, 검증 기준, 유지보수와 출시 결정은 사람이
+검토하고 확정했으며, 게시된 소프트웨어에 대한 최종 책임은 프로젝트
+유지관리자에게 있습니다. 자세한 내용은
+[감사의 말과 개발 과정 공개](ACKNOWLEDGEMENTS.md)를 참조하십시오.

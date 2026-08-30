@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10131d" />
+    <meta name="description" content="동일한 입력에 항상 같은 결과를 내는 masonry 배치 계산 — 세로·가로 레이아웃, 콘텐츠 측정, 플랫폼 독립 Core." />
+    <link rel="canonical" href="https://grid-masonry.sorune.org/ko/" />
+    <meta property="og:title" content="grid-masonry — 입력이 같으면 결과도 같은 masonry 배치" />
+    <meta property="og:description" content="세로와 가로 masonry를 하나의 논리 모델로 계산하는 Core와 React Web·Browser 어댑터." />
+    <meta property="og:url" content="https://grid-masonry.sorune.org/ko/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>grid-masonry — 입력이 같으면 결과도 같은 masonry 배치</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/ko/" aria-label="grid-masonry 한국어 홈"><span class="brand-mark">gm</span> grid-masonry</a>
+      <nav aria-label="주요 메뉴">
+        <a href="#demo">데모</a>
+        <a href="#architecture">구조</a>
+        <a href="/docs/ko/">문서</a>
+        <a href="/">English</a>
+        <a href="https://github.com/Sorune/grid-masonry">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <p class="eyebrow">grid-masonry 0.3.0</p>
+        <h1>입력이 같으면 결과도 같은 masonry 배치.</h1>
+        <p class="lede">세로와 가로 레이아웃, 여러 레인에 걸친 항목, 실제 콘텐츠 크기 측정, 예측 가능한 상태 관리를 하나의 플랫폼 독립 Core로 제공합니다. React Web과 Browser 어댑터는 계산된 좌표를 각 렌더링 환경에 적용합니다.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="/docs/ko/">한국어 문서 보기</a>
+          <a class="button" href="https://www.npmjs.com/package/grid-masonry-core">npm 패키지 보기</a>
+        </div>
+        <div class="pill-row" aria-label="주요 특징"><span>Core 실행 시 의존성 0개</span><span>입력 순서 유지</span><span>스크롤 정책은 호스트가 결정</span></div>
+      </section>
+
+      <section id="demo" class="demo-section wrap" aria-labelledby="demo-title">
+        <div class="section-heading"><div><p class="eyebrow">실시간 데모</p><h2 id="demo-title">모든 좌표는 Core가 계산합니다.</h2></div><p class="section-note">옵션을 바꾸어 보십시오. Browser 어댑터는 Core가 반환한 좌표를 화면에 적용하기만 합니다.</p></div>
+        <div class="demo-panel">
+          <div class="controls" aria-label="데모 설정">
+            <label>배치 방향<select id="axis"><option value="vertical">세로</option><option value="horizontal">가로</option></select></label>
+            <label>공간 배분<select id="distribution"><option value="start">start</option><option value="end">end</option><option value="center">center</option><option value="space-between">space-between</option><option value="space-evenly">space-evenly</option></select></label>
+            <label>진행 방향<select id="flow"><option value="forward">정방향</option><option value="reverse">역방향</option></select></label>
+            <label>교차 축 방향<select id="cross"><option value="forward">정방향</option><option value="reverse">역방향</option></select></label>
+            <label>레인 후보 범위 (flowTolerance)<input id="tolerance" type="number" min="0" step="0.05" value="0" /></label>
+            <button id="add" class="button small" type="button">항목 추가</button>
+            <button id="reset" class="button small" type="button">초기화</button>
+          </div>
+          <p id="demo-status" class="demo-status" role="status"></p>
+          <div id="stage-wrap" class="stage-wrap"><div id="stage" class="stage" aria-live="polite"></div></div>
+        </div>
+      </section>
+
+      <section class="feature-grid wrap" aria-label="주요 기능">
+        <article><span class="feature-number">01</span><h3>두 축, 하나의 배치 모델</h3><p>세로의 열과 가로의 행에 같은 논리 배치 규칙을 적용합니다. 방향 옵션은 좌표만 반전하며 입력 순서는 바꾸지 않습니다.</p></article>
+        <article><span class="feature-number">02</span><h3>콘텐츠 전체 크기 반영</h3><p>먼저 원본 비율로 배치한 뒤, 카드 전체를 측정한 <code>resolvedFootprint</code>을 Core가 정한 교차 축 크기에 맞춰 적용할 수 있습니다.</p></article>
+        <article><span class="feature-number">03</span><h3>명확한 레인 배치 규칙</h3><p><code>preferredColumn</code>과 <code>preferredRow</code>는 가능한 레인을 우선하고, <code>lockedColumn</code>과 <code>lockedRow</code>는 배치할 논리 레인을 제약합니다. 항목이 차지하는 레인 수는 현재 레인 수에 맞게 조정되며 입력값은 바뀌지 않습니다.</p></article>
+        <article><span class="feature-number">04</span><h3>렌더링 생명주기는 호스트가 관리</h3><p>Core는 좌표를 계산하고 React와 Browser는 항목의 정체성을 유지합니다. DOM, 측정 연동, 접근성, 스크롤은 호스트 애플리케이션이 담당합니다.</p></article>
+      </section>
+
+      <section id="architecture" class="architecture wrap"><div><p class="eyebrow">구조</p><h2>작은 Core, 분명한 책임 경계.</h2></div><div class="pipeline"><span>호스트의 배치 의도</span><b>→</b><span class="pipeline-core">Core 좌표 계산</span><b>→</b><span>React / Browser 적용</span></div><p>예약 영역, 진단, 스냅샷, 안정적 재배치, 질의, 가상화, <code>flowTolerance</code>는 특정 제품에 종속되지 않는 결정적 규칙으로 처리합니다. Core에는 DOM, 텍스트 RTL, 제품 정책, 스크롤 정책이 들어 있지 않습니다.</p></section>
+
+      <section class="cards wrap" aria-label="기능 상세">
+        <article class="info-card accent-blue"><p class="eyebrow">배치</p><h3>여러 레인에 걸친 항목과 예약 영역</h3><p>이어진 여러 레인을 차지하는 항목, 선호·고정 레인 제약, 항목을 놓을 수 없는 예약 영역, 다섯 가지 <code>flowDistribution</code>을 하나의 배치 규칙으로 조합합니다.</p><a href="/docs/ko/#placement">배치 기능 살펴보기 →</a></article>
+        <article class="info-card accent-purple"><p class="eyebrow">안정성</p><h3>검증 가능한 상태와 재배치</h3><p>체크포인트는 오래되거나 변조된 좌표를 거부합니다. 안정적 재배치는 제한된 후보를 실제 이동 거리로 비교합니다.</p><a href="/docs/ko/#state">상태 기능 살펴보기 →</a></article>
+        <article class="info-card accent-green"><p class="eyebrow">관찰</p><h3>질의와 진단</h3><p>선형 질의와 색인을 사용하는 진행 범위 질의, 가상화 기본 기능, 선택적 구조화 진단, 이동 거리 측정을 제공합니다.</p><a href="/docs/ko/#diagnostics">진단 기능 살펴보기 →</a></article>
+      </section>
+
+      <section class="install wrap"><div><p class="eyebrow">설치</p><h2>필요한 계층만 선택하십시오.</h2></div><pre><code>npm install grid-masonry-core
+npm install grid-masonry-react react
+npm install grid-masonry-browser</code></pre></section>
+
+      <section class="limitations wrap"><p class="eyebrow">지원 범위</p><h2>책임을 분리해 동작을 예측할 수 있습니다.</h2><div class="limit-list"><span>dense/backfill: 현재 지원하지 않음</span><span>React Native: 지원 보류</span><span>DOM·텍스트 RTL: 호스트 책임</span><span>스크롤 변경: 호스트 책임</span><span>현재 버전: 0.3.0</span></div></section>
+    </main>
+
+    <footer class="site-footer wrap"><div><a class="brand" href="/ko/"><span class="brand-mark">gm</span> grid-masonry</a><p>동일한 입력에 항상 같은 결과를 내는 배치 계산.</p><p>MIT © 2026 Sorune · 구현, 테스트, 문서 작성과 검토 과정에서 AI 기반 개발 도구를 활용했습니다. 공개 API와 출시 결정은 사람이 검토하고 확정했습니다.</p></div><div class="footer-links"><a href="/docs/ko/">한국어 문서</a><a href="/">English</a><a href="https://github.com/Sorune/grid-masonry">GitHub</a><a href="https://www.npmjs.com/package/grid-masonry-core">Core 패키지</a><a href="https://www.npmjs.com/package/grid-masonry-react">React 패키지</a><a href="https://www.npmjs.com/package/grid-masonry-browser">Browser 패키지</a></div></footer>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
