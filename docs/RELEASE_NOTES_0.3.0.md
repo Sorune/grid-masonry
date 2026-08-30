@@ -3,9 +3,9 @@
 **0.3.0 — NPM PUBLISHED / REGISTRY VERIFIED**
 
 The feature implementation is frozen. The coordinated npm packages are
-published and accepted by fresh registry-only consumers. This document records
-the `0.3.0` release line before the remaining Git tag, GitHub Release, and
-production Cloudflare Pages deployment steps.
+published and accepted by fresh registry-only consumers. The official site is
+deployed and production browser smoke acceptance is complete. The Git tag and
+GitHub Release remain as the final release steps.
 
 Highlights:
 
@@ -29,7 +29,8 @@ Npm Browser: published
 Registry-only consumer acceptance: PASS
 Git tag: pending
 GitHub Release: pending
-Production Cloudflare Pages deployment: pending
+Production Cloudflare Pages deployment: PASS
+Production browser smoke: PASS
 License: MIT © 2026 Sorune.
 
 ## Acknowledgements and development disclosure
