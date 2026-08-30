@@ -6,19 +6,36 @@ const status = document.querySelector("#demo-status");
 const controls = ["axis", "distribution", "flow", "cross", "tolerance"].map((id) => document.querySelector(`#${id}`));
 const isKorean = document.documentElement.lang === "ko";
 let itemCount = 9;
+let itemOrder = Array.from({ length: itemCount }, (_, index) => `item-${index + 1}`);
 
 const palette = ["#78b7ff", "#f7c66a", "#c69cff", "#7de0b0", "#ff9a8b", "#8ed6d0"];
 function items(axis, bindingSize) {
-  return Array.from({ length: itemCount }, (_, index) => ({
-    id: `item-${index + 1}`,
-    aspectRatio: [4, 0.5, 1, 3, 0.7][index % 5],
-    layoutHint: axis === "vertical"
-      ? index === 2 ? { columnSpan: 2, preferredColumn: 1 } : index === 5 ? { lockedColumn: 0 } : undefined
-      : index === 2 ? { rowSpan: 2, preferredRow: 1 } : index === 5 ? { lockedRow: 0 } : undefined,
-    resolvedFootprint: index % 4 === 0
-      ? axis === "vertical" ? { height: 150 + index * 8, forWidth: bindingSize } : { width: 210 + index * 8, forHeight: bindingSize }
-      : undefined,
-  }));
+  return itemOrder.map((id) => {
+    const index = Number(id.slice("item-".length)) - 1;
+    return {
+      id,
+      aspectRatio: [4, 0.5, 1, 3, 0.7][index % 5],
+      layoutHint: axis === "vertical"
+        ? index === 2 ? { columnSpan: 2, preferredColumn: 1 } : index === 5 ? { lockedColumn: 0 } : undefined
+        : index === 2 ? { rowSpan: 2, preferredRow: 1 } : index === 5 ? { lockedRow: 0 } : undefined,
+      resolvedFootprint: index % 4 === 0
+        ? axis === "vertical" ? { height: 150 + index * 8, forWidth: bindingSize } : { width: 210 + index * 8, forHeight: bindingSize }
+        : undefined,
+    };
+  });
+}
+
+function shuffleItems() {
+  const nextOrder = [...itemOrder];
+  for (let index = nextOrder.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [nextOrder[index], nextOrder[swapIndex]] = [nextOrder[swapIndex], nextOrder[index]];
+  }
+  if (nextOrder.length > 1 && nextOrder.every((id, index) => id === itemOrder[index])) {
+    [nextOrder[0], nextOrder[1]] = [nextOrder[1], nextOrder[0]];
+  }
+  itemOrder = nextOrder;
+  render();
 }
 
 function options(axis) {
@@ -49,14 +66,15 @@ function render() {
   stage.className = `stage ${horizontal ? "horizontal" : "vertical"}`;
   stage.style.width = horizontal ? `${Math.max(stageWrap.clientWidth, layout.containerWidth)}px` : "100%";
   stage.style.height = horizontal ? `${layout.containerHeight}px` : `${Math.max(260, layout.containerHeight)}px`;
-  stage.replaceChildren(...layout.cells.map((cell, index) => {
+  stage.replaceChildren(...layout.cells.map((cell) => {
     const element = document.createElement("article");
+    const paletteIndex = Number(String(cell.id).slice("item-".length)) - 1;
     element.className = "demo-cell";
     element.style.left = `${cell.x}px`;
     element.style.top = `${cell.y}px`;
     element.style.width = `${cell.width}px`;
     element.style.height = `${cell.height}px`;
-    element.style.background = `linear-gradient(145deg, ${palette[index % palette.length]}, #151a2a)`;
+    element.style.background = `linear-gradient(145deg, ${palette[paletteIndex % palette.length]}, #151a2a)`;
     const laneLabel = horizontal
       ? isKorean ? `행 ${cell.row} · ${cell.rowSpan}행 차지` : `row ${cell.row} · span ${cell.rowSpan}`
       : isKorean ? `열 ${cell.column} · ${cell.columnSpan}열 차지` : `column ${cell.column} · span ${cell.columnSpan}`;
@@ -69,7 +87,17 @@ function render() {
 }
 
 controls.forEach((control) => control.addEventListener("input", render));
-document.querySelector("#add").addEventListener("click", () => { itemCount += 1; render(); });
-document.querySelector("#reset").addEventListener("click", () => { itemCount = 9; document.querySelector("#tolerance").value = "0"; render(); });
+document.querySelector("#add").addEventListener("click", () => {
+  itemCount += 1;
+  itemOrder = [...itemOrder, `item-${itemCount}`];
+  render();
+});
+document.querySelector("#shuffle").addEventListener("click", shuffleItems);
+document.querySelector("#reset").addEventListener("click", () => {
+  itemCount = 9;
+  itemOrder = Array.from({ length: itemCount }, (_, index) => `item-${index + 1}`);
+  document.querySelector("#tolerance").value = "0";
+  render();
+});
 new ResizeObserver(render).observe(stageWrap);
 render();
