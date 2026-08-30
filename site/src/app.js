@@ -10,7 +10,7 @@ const palette = ["#78b7ff", "#f7c66a", "#c69cff", "#7de0b0", "#ff9a8b", "#8ed6d0
 function items(axis, bindingSize) {
   return Array.from({ length: itemCount }, (_, index) => ({
     id: `item-${index + 1}`,
-    aspectRatio: [1.4, 0.75, 1, 1.8, 0.9][index % 5],
+    aspectRatio: [4, 0.5, 1, 3, 0.7][index % 5],
     layoutHint: axis === "vertical"
       ? index === 2 ? { columnSpan: 2, preferredColumn: 1 } : index === 5 ? { lockedColumn: 0 } : undefined
       : index === 2 ? { rowSpan: 2, preferredRow: 1 } : index === 5 ? { lockedRow: 0 } : undefined,
