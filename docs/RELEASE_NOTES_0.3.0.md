@@ -1,10 +1,10 @@
-# Release notes draft
+# grid-masonry 0.3.0 release notes
 
 **0.3.0 — NOT PUBLISHED**
 
-The feature implementation is frozen for the accepted P1–P19 capability set.
-This draft is not yet a Git tag, npm publication, or GitHub Release. It records
-the coordinated `0.3.0` release candidate.
+The feature implementation is frozen. This release candidate is not yet a Git
+tag, npm publication, or GitHub Release; it records the coordinated `0.3.0`
+release line.
 
 Highlights:
 

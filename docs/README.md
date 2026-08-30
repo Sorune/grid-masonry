@@ -1,7 +1,7 @@
 # Documentation index
 
-This index describes the frozen P1–P19 implementation. Phase numbers are
-engineering history, not the user-facing API model.
+This index describes the frozen public implementation and its supported
+capabilities.
 
 ## Start here
 
@@ -15,11 +15,12 @@ engineering history, not the user-facing API model.
 - [Diagnostics and queries](guides/en/DIAGNOSTICS_AND_QUERIES.md)
 - [Limitations and status](guides/en/LIMITATIONS.md)
 - [Acknowledgements and development disclosure](guides/en/ACKNOWLEDGEMENTS.md)
+- [Testing](TESTING.md)
 - [한국어 안내](guides/ko/README.md)
 
 ## Supporting material
 
-- [Release notes draft](RELEASE_NOTES_DRAFT.md) — 0.3.0; release candidate
+- [0.3.0 release notes](RELEASE_NOTES_0.3.0.md) — release candidate
 - [Migration and change summary](MIGRATION.md)
 
 Frozen source, declarations, and accepted tests are authoritative for the

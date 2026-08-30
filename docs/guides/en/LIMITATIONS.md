@@ -19,7 +19,7 @@
 
 ## Release status
 
-The accepted P1–P19 feature implementation is frozen. Package manifests are
+The accepted feature implementation is frozen. Package manifests are
 coordinated at `0.3.0` with MIT metadata and exact Core dependencies, but npm
 publication and registry-backed clean-consumer verification are not complete.
 

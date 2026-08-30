@@ -11,7 +11,7 @@
 - 진단은 opt-in 파생 관찰이며 state에 log를 저장하지 않습니다.
 - React Native는 deferred입니다.
 
-P1–P19 feature implementation은 frozen/accepted 상태입니다. Package는
+Accepted feature implementation은 frozen 상태입니다. Package는
 `0.3.0`, MIT, exact Core dependency로 준비되었지만 npm publish와 registry
 clean-consumer 검증은 아직 완료되지 않았습니다. 현재 문서는 게시된
 release를 주장하지 않습니다. MIT © 2026 Sorune.

@@ -91,7 +91,8 @@ dense/backfill placement, drag-and-drop, or carousel behavior.
 - [Diagnostics and queries](docs/guides/en/DIAGNOSTICS_AND_QUERIES.md)
 - [Limitations and status](docs/guides/en/LIMITATIONS.md)
 - [한국어 문서](docs/guides/ko/README.md)
-- [Release notes draft](docs/RELEASE_NOTES_DRAFT.md)
+- [0.3.0 release notes](docs/RELEASE_NOTES_0.3.0.md)
+- [Testing](docs/TESTING.md)
 
 ## License
 
@@ -114,7 +115,7 @@ release decisions.
 
 ## Current status
 
-Feature implementation for the accepted P1–P19 capability set is frozen.
+The accepted feature implementation is frozen.
 Package manifests are coordinated at `0.3.0` with MIT metadata and exact Core
 dependencies. Publication and registry verification are still pending in this
 release campaign; do not treat the candidate as published until the registry

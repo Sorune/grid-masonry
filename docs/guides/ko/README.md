@@ -1,7 +1,6 @@
 # 문서 안내
 
-이 문서는 frozen P1–P19 구현을 설명합니다. 단계 번호는 개발 이력이며
-사용자가 이해해야 할 API 모델이 아닙니다.
+이 문서는 frozen public 구현과 지원하는 capability를 설명합니다.
 
 - [최종 아키텍처](../../ARCHITECTURE.md)
 - [Core 사용법](CORE_USAGE.md)
@@ -12,9 +11,12 @@
 - [React 사용법](REACT_USAGE.md)
 - [Browser 사용법](BROWSER_USAGE.md)
 - [제한사항·현재 상태](LIMITATIONS.md)
+- [감사 및 개발 공개](ACKNOWLEDGEMENTS.md)
+- [테스트](../../TESTING.md)
 
 영문 문서와 동일하게 Core는 결정적 geometry와 논리 배치를 소유하고,
 호스트는 DOM, CSS, 측정 조정, 스크롤, 텍스트/접근성 정책을 소유합니다.
 
-자세한 [변경 요약](../../MIGRATION.md)과 [출시 노트 초안](../../RELEASE_NOTES_DRAFT.md)도
-참조할 수 있습니다. 버전은 아직 정해지지 않았고 게시되지 않았습니다.
+자세한 [변경 요약](../../MIGRATION.md)과 [0.3.0 출시 노트](../../RELEASE_NOTES_0.3.0.md)도
+참조할 수 있습니다. 현재 문서는 release candidate 상태를 정확히 표시하며
+아직 npm에 게시된 release라고 주장하지 않습니다.
