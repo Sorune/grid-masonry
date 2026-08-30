@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.tgz
+!artifacts/
+!artifacts/npm/
+!artifacts/npm/*.tgz
+.DS_Store
+.idea/
+.vscode/

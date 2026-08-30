@@ -1,0 +1,44 @@
+{
+  "name": "grid-masonry-core",
+  "version": "0.3.0",
+  "description": "Platform-independent media geometry, ratio query, and deterministic masonry layout kernel.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sorune/grid-masonry.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://grid-masonry.sorune.org/",
+  "bugs": {
+    "url": "https://github.com/Sorune/grid-masonry/issues"
+  },
+  "keywords": ["masonry", "layout", "grid", "geometry"],
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck:fixtures": "tsc --noEmit -p test/tsconfig.json",
+    "benchmark:spatial": "npm run build && node bench/spatial-query.mjs",
+    "test": "npm run build && npm run typecheck:fixtures && node --test test/*.test.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

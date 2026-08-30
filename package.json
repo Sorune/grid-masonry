@@ -1,0 +1,28 @@
+{
+  "name": "grid-masonry",
+  "version": "0.3.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Private npm workspace for deterministic grid-masonry Core, React Web, and Browser packages.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sorune/grid-masonry.git"
+  },
+  "homepage": "https://grid-masonry.sorune.org/",
+  "bugs": {
+    "url": "https://github.com/Sorune/grid-masonry/issues"
+  },
+  "keywords": ["masonry", "layout", "grid", "geometry", "react"],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=grid-masonry-core && npm run build --workspace=grid-masonry-react && npm run build --workspace=grid-masonry-browser",
+    "typecheck": "npm run build --workspace=grid-masonry-core && npm run typecheck --workspace=grid-masonry-core && npm run typecheck --workspace=grid-masonry-react && npm run typecheck --workspace=grid-masonry-browser",
+    "test": "npm run test --workspace=grid-masonry-core && npm run test --workspace=grid-masonry-react && npm run test --workspace=grid-masonry-browser",
+    "verify": "npm run build && npm run typecheck && npm run test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "grid-masonry-react",
+  "version": "0.3.0",
+  "description": "React Web adapter for the platform-independent grid-masonry layout core.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sorune/grid-masonry.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://grid-masonry.sorune.org/",
+  "bugs": {
+    "url": "https://github.com/Sorune/grid-masonry/issues"
+  },
+  "keywords": ["masonry", "layout", "grid", "react"],
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "grid-masonry-core": "0.3.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.2"
+  },
+  "devDependencies": {
+    "react-test-renderer": "^19.2.8",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

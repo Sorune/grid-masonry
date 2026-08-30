@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10131d" />
+    <meta name="description" content="Deterministic masonry geometry for real content — vertical, horizontal, measured, and platform-independent." />
+    <link rel="canonical" href="https://grid-masonry.sorune.org/" />
+    <meta property="og:title" content="grid-masonry — deterministic masonry geometry" />
+    <meta property="og:description" content="One logical geometry core for vertical and horizontal masonry across React Web and Browser hosts." />
+    <meta property="og:url" content="https://grid-masonry.sorune.org/" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>grid-masonry — deterministic masonry geometry</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="grid-masonry home"><span class="brand-mark">gm</span> grid-masonry</a>
+      <nav aria-label="Primary navigation">
+        <a href="#demo">Demo</a>
+        <a href="#architecture">Architecture</a>
+        <a href="/docs/en/">Docs</a>
+        <a href="/docs/ko/" lang="ko">한국어</a>
+        <a href="https://github.com/Sorune/grid-masonry">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <p class="eyebrow">grid-masonry 0.3.0</p>
+        <h1>Deterministic masonry geometry for real content.</h1>
+        <p class="lede">A platform-independent Core for vertical and horizontal layouts, with spans, measured whole-item footprints, predictable state, and thin React Web and Browser adapters.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="/docs/en/">Read the docs</a>
+          <a class="button" href="https://www.npmjs.com/search?q=grid-masonry">View packages</a>
+        </div>
+        <div class="pill-row" aria-label="Key properties"><span>Core: zero runtime deps</span><span>source order preserved</span><span>no hidden scroll policy</span></div>
+      </section>
+
+      <section id="demo" class="demo-section wrap" aria-labelledby="demo-title">
+        <div class="section-heading"><div><p class="eyebrow">Live demo</p><h2 id="demo-title">The cells come from Core.</h2></div><p class="section-note">Change the semantic options; the browser only projects the returned geometry.</p></div>
+        <div class="demo-panel">
+          <div class="controls" aria-label="Demo controls">
+            <label>Axis<select id="axis"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option></select></label>
+            <label>Distribution<select id="distribution"><option>start</option><option>end</option><option>center</option><option>space-between</option><option>space-evenly</option></select></label>
+            <label>Flow<select id="flow"><option value="forward">Forward</option><option value="reverse">Reverse</option></select></label>
+            <label>Cross<select id="cross"><option value="forward">Forward</option><option value="reverse">Reverse</option></select></label>
+            <label>Flow tolerance<input id="tolerance" type="number" min="0" step="0.05" value="0" /></label>
+            <button id="add" class="button small" type="button">Add item</button>
+            <button id="reset" class="button small" type="button">Reset</button>
+          </div>
+          <p id="demo-status" class="demo-status" role="status"></p>
+          <div id="stage-wrap" class="stage-wrap"><div id="stage" class="stage" aria-live="polite"></div></div>
+        </div>
+      </section>
+
+      <section class="feature-grid wrap" aria-label="Capabilities">
+        <article><span class="feature-number">01</span><h3>Two axes, one model</h3><p>Vertical columns and horizontal rows share logical placement semantics. Direction is projection, not source reordering.</p></article>
+        <article><span class="feature-number">02</span><h3>Whole-item geometry</h3><p>Use an intrinsic ratio first, then bind a measured card footprint to Core's resolved cross size.</p></article>
+        <article><span class="feature-number">03</span><h3>Intent without surprises</h3><p>Preferred lanes are soft. Locks are hard logical lanes. Spans normalize responsively and never mutate input.</p></article>
+        <article><span class="feature-number">04</span><h3>Host-owned lifecycle</h3><p>Core calculates. React and Browser preserve identity. Hosts own DOM, measurement coordination, accessibility, and scroll.</p></article>
+      </section>
+
+      <section id="architecture" class="architecture wrap"><div><p class="eyebrow">Architecture</p><h2>Small core. Clear boundaries.</h2></div><div class="pipeline"><span>host intent</span><b>→</b><span class="pipeline-core">Core geometry</span><b>→</b><span>React / Browser projection</span></div><p>Reserved regions, diagnostics, snapshots, stable reflow, queries, virtualization primitives, and optional flow tolerance stay generic and deterministic. There is no DOM, text RTL, product, or scroll policy in Core.</p></section>
+
+      <section class="cards wrap" aria-label="Feature details">
+        <article class="info-card accent-blue"><p class="eyebrow">Placement</p><h3>Spans, lanes, regions</h3><p>Contiguous multi-lane spans, preferred or locked logical lanes, hard reserved regions, and all five accepted flow distributions compose in one placement kernel.</p><a href="/docs/en/#placement">Explore placement →</a></article>
+        <article class="info-card accent-purple"><p class="eyebrow">Stability</p><h3>State that can explain itself</h3><p>Validated checkpoints reject stale or tampered geometry. Stable reflow compares bounded candidates by actual displacement.</p><a href="/docs/en/#state">Explore state →</a></article>
+        <article class="info-card accent-green"><p class="eyebrow">Observation</p><h3>Queries and diagnostics</h3><p>Use linear or indexed flow queries, virtualization primitives, opt-in structured diagnostics, and displacement metrics.</p><a href="/docs/en/#diagnostics">Explore diagnostics →</a></article>
+      </section>
+
+      <section class="install wrap"><div><p class="eyebrow">Install</p><h2>Use the layer you need.</h2></div><pre><code>npm install grid-masonry-core
+npm install grid-masonry-react react
+npm install grid-masonry-browser</code></pre></section>
+
+      <section class="limitations wrap"><p class="eyebrow">Boundaries</p><h2>Predictable by design.</h2><div class="limit-list"><span>Dense/backfill: deferred</span><span>React Native: deferred</span><span>DOM/text RTL: host-owned</span><span>Scroll mutation: host-owned</span><span>Package release: 0.3.0</span></div></section>
+    </main>
+
+    <footer class="site-footer wrap"><div><a class="brand" href="/"><span class="brand-mark">gm</span> grid-masonry</a><p>Deterministic geometry for real content.</p><p>MIT © 2026 Sorune · AI-assisted engineering tools supported implementation, testing, documentation, and review/orchestration.</p></div><div class="footer-links"><a href="/docs/en/">English docs</a><a href="/docs/ko/">한국어 문서</a><a href="https://github.com/Sorune/grid-masonry">GitHub</a><a href="https://www.npmjs.com/search?q=grid-masonry">npm</a></div></footer>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
