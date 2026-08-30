@@ -4,7 +4,13 @@
 library. Core calculates logical item placement; React and Browser packages
 project that geometry into host-owned rendering lifecycles.
 
-**Release candidate:** `0.3.0` · [Official website](https://grid-masonry.sorune.org/) · [English docs](https://grid-masonry.sorune.org/docs/en/) · [한국어 문서](https://grid-masonry.sorune.org/docs/ko/)
+**Npm packages:** `0.3.0` published and registry-verified · [Official website](https://grid-masonry.sorune.org/) · [English docs](https://grid-masonry.sorune.org/docs/en/) · [한국어 문서](https://grid-masonry.sorune.org/docs/ko/)
+
+grid-masonry originated from a product layout implementation where geometry,
+rendering, measurement, application state, and product-specific behavior had
+become too tightly coupled. It was extracted so deterministic layout logic
+could be tested and maintained independently while host applications retain
+rendering, interaction, accessibility, and product policy.
 
 ```bash
 npm install grid-masonry-core
@@ -115,8 +121,6 @@ release decisions.
 
 ## Current status
 
-The accepted feature implementation is frozen.
-Package manifests are coordinated at `0.3.0` with MIT metadata and exact Core
-dependencies. Publication and registry verification are still pending in this
-release campaign; do not treat the candidate as published until the registry
-checks complete.
+The accepted feature implementation is frozen. The coordinated `0.3.0` npm
+packages are published and registry-verified. The Git tag, GitHub Release, and
+production website deployment remain separate pending release steps.

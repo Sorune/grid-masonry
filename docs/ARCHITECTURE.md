@@ -39,6 +39,24 @@ container-relative geometry
 Core does not import React, DOM, browser APIs, React Native, image APIs, or
 product types. Core runtime dependencies remain zero.
 
+## Why this library exists
+
+grid-masonry was extracted from a product-specific layout implementation where
+geometry calculation had become increasingly coupled to rendering,
+measurement, application state, and product policy.
+
+The extraction had three primary goals:
+
+- keep deterministic geometry independently testable;
+- prevent host and product semantics from leaking into the layout engine;
+- allow rendering adapters and applications to evolve without rewriting the
+  layout model.
+
+For that reason, Core intentionally does not own DOM rendering, scrolling,
+drag gestures, accessibility policy, localization, or product-specific state.
+Reusability is a consequence of isolating the layout boundary rather than a
+requirement for product-specific behavior to enter Core.
+
 ## Logical geometry pipeline
 
 ```text

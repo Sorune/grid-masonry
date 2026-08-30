@@ -1,10 +1,11 @@
 # grid-masonry 0.3.0 release notes
 
-**0.3.0 — NOT PUBLISHED**
+**0.3.0 — NPM PUBLISHED / REGISTRY VERIFIED**
 
-The feature implementation is frozen. This release candidate is not yet a Git
-tag, npm publication, or GitHub Release; it records the coordinated `0.3.0`
-release line.
+The feature implementation is frozen. The coordinated npm packages are
+published and accepted by fresh registry-only consumers. This document records
+the `0.3.0` release line before the remaining Git tag, GitHub Release, and
+production Cloudflare Pages deployment steps.
 
 Highlights:
 
@@ -22,7 +23,13 @@ Highlights:
 Dense/backfill is deferred. React Native is deferred. DOM, scrolling,
 accessibility, text direction, and product semantics remain host-owned.
 
-No tag, GitHub release, or npm package publication has been created yet.
+Npm Core: published
+Npm React: published
+Npm Browser: published
+Registry-only consumer acceptance: PASS
+Git tag: pending
+GitHub Release: pending
+Production Cloudflare Pages deployment: pending
 License: MIT © 2026 Sorune.
 
 ## Acknowledgements and development disclosure
