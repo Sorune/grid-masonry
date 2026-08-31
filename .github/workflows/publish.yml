@@ -1,0 +1,253 @@
+name: Publish npm packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Coordinated package version to publish (for example, 0.3.1)
+        required: true
+        type: string
+      confirm:
+        description: Type "publish" to authorize the registry publish job
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Require explicit confirmation
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          set -euo pipefail
+          if [ "$CONFIRM" != "publish" ]; then
+            echo "::error::Confirmation must be exactly: publish"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node for npm trusted publishing
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Show release toolchain
+        run: |
+          node --version
+          npm --version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify packages
+        run: npm run verify
+
+      - name: Audit package tarballs
+        run: |
+          npm run pack:check --workspace=grid-masonry-core
+          npm run pack:check --workspace=grid-masonry-react
+          npm run pack:check --workspace=grid-masonry-browser
+
+      - name: Build official site
+        run: npm --prefix site run build
+
+      - name: Validate coordinated version and registry availability
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+
+          const expected = process.env.VERSION;
+          if (!expected) {
+            throw new Error('version input is required');
+          }
+
+          const read = (path) => JSON.parse(fs.readFileSync(path, 'utf8'));
+          const root = read('package.json');
+          const core = read('packages/core/package.json');
+          const react = read('packages/react/package.json');
+          const browser = read('packages/browser/package.json');
+
+          for (const [name, manifest] of [
+            ['root', root],
+            ['grid-masonry-core', core],
+            ['grid-masonry-react', react],
+            ['grid-masonry-browser', browser],
+          ]) {
+            if (manifest.version !== expected) {
+              throw new Error(`${name} version ${manifest.version} does not match requested ${expected}`);
+            }
+          }
+
+          if (react.dependencies?.['grid-masonry-core'] !== expected) {
+            throw new Error('grid-masonry-react must depend on the exact coordinated Core version');
+          }
+          if (browser.dependencies?.['grid-masonry-core'] !== expected) {
+            throw new Error('grid-masonry-browser must depend on the exact coordinated Core version');
+          }
+          NODE
+
+          for package in grid-masonry-core grid-masonry-react grid-masonry-browser; do
+            if npm view "$package@$VERSION" version >/dev/null 2>&1; then
+              echo "::error::$package@$VERSION already exists in the npm registry"
+              exit 1
+            fi
+          done
+
+      - name: Publish Core
+        env:
+          VERSION: ${{ inputs.version }}
+        run: npm publish --workspace=grid-masonry-core --access public
+
+      - name: Accept Core from registry
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+
+          wait_for_version() {
+            local package="$1"
+            for attempt in $(seq 1 30); do
+              local actual
+              actual="$(npm view "$package@$VERSION" version 2>/dev/null || true)"
+              if [ "$actual" = "$VERSION" ]; then
+                return 0
+              fi
+              echo "Waiting for $package@$VERSION to become visible ($attempt/30)"
+              sleep 10
+            done
+            echo "::error::$package@$VERSION did not become visible in time"
+            return 1
+          }
+
+          wait_for_version grid-masonry-core
+
+          consumer="$(mktemp -d)"
+          cd "$consumer"
+          npm init -y >/dev/null
+          npm install --ignore-scripts --no-audit --no-fund "grid-masonry-core@$VERSION"
+          node --input-type=module <<'NODE'
+          const core = await import('grid-masonry-core');
+          if (typeof core.calculateMasonryLayout !== 'function') {
+            throw new Error('calculateMasonryLayout export is missing');
+          }
+          const result = core.calculateMasonryLayout(
+            [
+              { id: 'a', aspectRatio: 4 / 3 },
+              { id: 'b', aspectRatio: 1 },
+            ],
+            { containerWidth: 480, minColumnWidth: 200, gap: 8 },
+          );
+          if (!Array.isArray(result.cells) || result.cells.length !== 2) {
+            throw new Error('registry Core consumer produced an invalid layout');
+          }
+          NODE
+
+      - name: Publish React
+        env:
+          VERSION: ${{ inputs.version }}
+        run: npm publish --workspace=grid-masonry-react --access public
+
+      - name: Accept React from registry
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+
+          wait_for_version() {
+            local package="$1"
+            for attempt in $(seq 1 30); do
+              local actual
+              actual="$(npm view "$package@$VERSION" version 2>/dev/null || true)"
+              if [ "$actual" = "$VERSION" ]; then
+                return 0
+              fi
+              echo "Waiting for $package@$VERSION to become visible ($attempt/30)"
+              sleep 10
+            done
+            echo "::error::$package@$VERSION did not become visible in time"
+            return 1
+          }
+
+          wait_for_version grid-masonry-react
+
+          consumer="$(mktemp -d)"
+          cd "$consumer"
+          npm init -y >/dev/null
+          npm install --ignore-scripts --no-audit --no-fund "react@19" "grid-masonry-react@$VERSION"
+          node --input-type=module <<'NODE'
+          const adapter = await import('grid-masonry-react');
+          if (typeof adapter.MasonryGrid !== 'function') {
+            throw new Error('MasonryGrid export is missing');
+          }
+          NODE
+
+      - name: Publish Browser
+        env:
+          VERSION: ${{ inputs.version }}
+        run: npm publish --workspace=grid-masonry-browser --access public
+
+      - name: Accept Browser from registry
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+
+          wait_for_version() {
+            local package="$1"
+            for attempt in $(seq 1 30); do
+              local actual
+              actual="$(npm view "$package@$VERSION" version 2>/dev/null || true)"
+              if [ "$actual" = "$VERSION" ]; then
+                return 0
+              fi
+              echo "Waiting for $package@$VERSION to become visible ($attempt/30)"
+              sleep 10
+            done
+            echo "::error::$package@$VERSION did not become visible in time"
+            return 1
+          }
+
+          wait_for_version grid-masonry-browser
+
+          consumer="$(mktemp -d)"
+          cd "$consumer"
+          npm init -y >/dev/null
+          npm install --ignore-scripts --no-audit --no-fund "grid-masonry-browser@$VERSION"
+          node --input-type=module <<'NODE'
+          const adapter = await import('grid-masonry-browser');
+          if (Object.keys(adapter).length === 0) {
+            throw new Error('Browser adapter has no public exports');
+          }
+          NODE
+
+      - name: Verify coordinated registry state
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          for package in grid-masonry-core grid-masonry-react grid-masonry-browser; do
+            actual="$(npm view "$package@$VERSION" version)"
+            if [ "$actual" != "$VERSION" ]; then
+              echo "::error::$package expected $VERSION but registry returned $actual"
+              exit 1
+            fi
+            echo "$package@$VERSION registry acceptance: PASS"
+          done
